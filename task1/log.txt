@@ -1,0 +1,12 @@
+$ git log
+commit c0cb29550e9b1a573bd499787b3213d1af63f326
+Author: Dunaev <rulit.ivan@yandex.ru>
+Date:   Thu Feb 9 20:33:11 2017 +0300
+
+    add status.txt
+
+commit a5235b7ba6aa93f3a103a183051c67ee05f997c6
+Author: Dunaev <rulit.ivan@yandex.ru>
+Date:   Thu Feb 9 20:30:29 2017 +0300
+
+    add .gitignore
