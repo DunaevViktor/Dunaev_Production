@@ -112,6 +112,7 @@ body, html {
     display: inline-block;
     width: 400px;
     height: 40%;
+    border: black 4px solid;
     background: #b5b993;
     border-radius: 10px;
     }
@@ -130,7 +131,7 @@ body, html {
     .Name {
     color: black;
     font-size: 30px;
-    font-family: "Lucida Console";
+    font-family: "Courier New";
     font-weight: bold;
     text-indent: 30px;
     }
@@ -138,7 +139,7 @@ body, html {
     .Name1 {
     color: #b414b5;
     font-size: 30px;
-    font-family: "Lucida Console";
+    font-family: "Comic Sans MS";
     font-weight: bold;
     text-indent: 30px;
 }
@@ -172,7 +173,7 @@ body, html {
     background: #7850b3;
     border: #040403 2px dotted;
     cursor: pointer;
-    font-family: "Rage Italic";
+    font-family: "Monotype Corsiva";
     color: #fbff45;
     width: 120px;
     height: 37px;
@@ -274,7 +275,7 @@ body, html {
 
     .footer{
     height: 10%;
-    background: red ;
+    background: red;
     margin-top: 2%;
     padding-left: 1%;
     align-content: center;
