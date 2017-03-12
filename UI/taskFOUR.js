@@ -241,23 +241,23 @@ function getArticles(skip, top, filterConfig){
     var result = articles;
     var from = skip || 0;
     var number = top || 10;
-    if (filterConfig != undefined) {
-        if (filterConfig.author != undefined) {
+    if (filterConfig) {
+        if (filterConfig.author) {
             result = result.filter(function (element) {
                 return element.author == filterConfig.author;
             })
         }
-        if (filterConfig.dateFrom != undefined) {
+        if (filterConfig.dateFrom) {
             result = result.filter(function (element) {
                 return element.createdAt.getTime() >= filterConfig.dateFrom.getTime();
             })
         }
-        if (filterConfig.dateTo != undefined) {
+        if (filterConfig.dateTo) {
             result = result.filter(function (element) {
                 return element.createdAt.getTime() <= filterConfig.dateTo.getTime();
             })
         }
-        if (filterConfig.tags != undefined && filterConfig.tags.length != 0) {
+        if (filterConfig.tags && filterConfig.tags.length != 0) {
             result = result.filter(function (element) {
                 return filterConfig.tags.every(function (tag) {
                     return element.tags.indexOf(tag) >= 0;
@@ -275,13 +275,13 @@ function getArticle(findId) {
 }
 
 function validateArticle(article) {
-    if (article.title != undefined && (article.title.length > 100 || article.title.length == 0)) {
+    if (article.title && (article.title.length > 100 || article.title.length == 0)) {
         return false;
-    } else if (article.tags != undefined && (article.tags.length == 0 || article.tags.length > 5)) {
+    } else if (article.tags && (article.tags.length == 0 || article.tags.length > 5)) {
         return false;
-    } else if (article.summary != undefined && (article.summary.length == 0 || article.summary.length > 200)) {
+    } else if (article.summary && (article.summary.length == 0 || article.summary.length > 200)) {
         return false;
-    } else if (article.tags != undefined && !article.tags.every(function (tag) {
+    } else if (article.tags && !article.tags.every(function (tag) {
             if (tags.indexOf(tag) >= 0) {
                 return true;
             } else {
@@ -320,16 +320,16 @@ function editArticle(editId, article) {
     if(!validateArticle(article) || editIndex < 0) {
         return false;
     }
-    if (article.title != undefined) {
+    if (article.title) {
         articles[editIndex].title = article.title;
     }
-    if (article.summary != undefined) {
+    if (article.summary) {
         articles[editIndex].summary = article.summary;
     }
-    if (article.tags != undefined) {
+    if (article.tags) {
         articles[editIndex].tags = article.tags;
     }
-    if (article.content != undefined) {
+    if (article.content) {
         articles[editIndex].content = article.content;
     }
     return true;
@@ -403,8 +403,8 @@ console.log("removeArticle(valid): " + removeArticle("21"));
 console.log("removeArticle(invalid): " + removeArticle("30"));
 
 console.log("articles length after removeArticle(): " + articles.length);
-console.log("getArticles(0, 10)(valid): ");
 
+console.log("getArticles(0, 10)(valid): ");
 getArticles(0, 10).forEach(function (element) {
     console.log(element);
 });
