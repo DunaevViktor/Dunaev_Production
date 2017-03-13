@@ -1,254 +1,310 @@
-body, html {
+    body, html {
+    /* Display & Box Model */
     max-width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
+    /* Color */
     font-family: "Lucida Console";
     background: #ecdfff;
     }
 
-
-
-    header {
-    background-color: red;
+    header-login {
+    /* Positioning */
+    position: fixed;
+    top:0;
+    /* Display & Box Model */
     width: 100%;
     height: 10%;
-    position: fixed;
     display: block;
-    top:0;
+    /* Color */
+    background-color: red;
     }
     .clearfix {
     clear:both;
     }
 
-    header1 {
+    header-search{
+    /* Positioning */
+    top: 10%;
+    position: fixed;
+    /* Display & Box Model */
     margin-bottom: 5%;
-    background-color: #0cf1ce;
     width: 100%;
     height: 10%;
-    position: fixed;
     display: block;
-    top: 10%;
+    /* Color */
+    background-color: #0cf1ce;
     }
     .clearfix {
     clear:both;
     }
 
     #logo {
-    color: white;
+    /* Positioning */
+    float: left;
+    /* Display & Box Model */
     font-size: 35px;
     margin-left: 5%;
     margin-top: 1%;
+    /* Color */
+    color: white;
     font-family: "Lucida Console";
-    float: left;
     }
 
-    header button {
+    header-login button {
+    /* Positioning */
     float: right;
+    /* Display & Box Model */
     margin-top: 0.8%;
     font-size: 25px;
     margin-right: 2%;
-    background: green;
-    border: #171616 5px solid;
     cursor: pointer;
-    font-family: "Rage Italic";
-    color: #fff;
-    width: 200px;
-    height: 50px;
     border-radius: 15px;
     outline: none;
+    width: 200px;
+    height: 50px;
+    /* Color */
+    border: #171616 5px solid;
+    background: green;
+    font-family: "Rage Italic";
+    color: #fff;
+ 
     }
-    header button:hover{
+    header-login button:hover{
     background: #debceb;
     }
 
-    header1 button {
+    header-search button {
+    /* Positioning */
     float: right;
+    /* Display & Box Model */
     margin-top: 0.3%;
     font-size: 20px;
     margin-right: 1%;
-    background: yellow;
-    border: #2b2277 2px solid;
     border-radius: 15px;
     cursor: pointer;
-    font-family: "Rage Italic";
-    color: #2d2df1;
     width: 200px;
     height: 50px;
     outline: none;
+    /* Color */
+    border: #2b2277 2px solid;
+    color: #2d2df1;
+    background: yellow;
+    font-family: "Rage Italic";
     }
-    header1 button:hover{
+    header-search button:hover{
     background: #debceb;
     }
 
-    header1 button1 {
+    header-search button-search {
+    /* Positioning */
     float: initial;
+    /* Display & Box Model */
     margin-top: 1%;
     font-size: 20px;
     margin-right: 1%;
-    background: #f9f9f9;
-    border: #e22cd6 2px dotted;
     border-radius: 15px;
     cursor: pointer;
-    font-family: "Rage Italic";
-    color: #000000;
     width: 200px;
     height: 50px;
     outline: none;
+    /* Color */
+    border: #e22cd6 2px dotted;
+    background: #f9f9f9;
+    font-family: "Rage Italic";
+    color: #000000;
+
     }
-    header1 button1:hover{
+    header-search button-search:hover{
     background: #debceb;
     }
 
     .content{
+    /* Positioning */
+    float: initial;
+    /* Display & Box Model */
     margin-top: 10%;
     margin-left: 3%;
-    float: initial;
     }
-    .block{
+
+    .block-news{
+    /* Positioning */
+    float: left;
+    /* Display & Box Model */
     margin-right: 1%;
     margin-top: 5%;
-    float: left;
     display: inline-block;
     width: 400px;
     height: 40%;
     border: black 4px solid;
-    background: #b5b993;
     border-radius: 10px;
+    /* Color */
+    background: #b5b993;
     }
 
-    .block1{
+    .block-tags{
+    /* Positioning */
+    float: left;
+    /* Display & Box Model */
     margin-right: 1%;
     margin-top: 5%;
-    float: left;
     display: inline-block;
     width: 1200px;
     height: 30%;
-    background: #aab926;
     border-radius: 10px;
+    /* Color */
+    background: #aab926;
     }
 
     .Name {
-    color: black;
+    /* Display & Box Model */
     font-size: 30px;
-    font-family: "Courier New";
     font-weight: bold;
     text-indent: 30px;
+    /* Color */
+    font-family: "Courier New";
+    color: black;
     }
 
-    .Name1 {
-    color: #b414b5;
+    .Name-for-tags {
+    /* Display & Box Model */
     font-size: 30px;
-    font-family: "Comic Sans MS";
     font-weight: bold;
     text-indent: 30px;
-}
-    .imgNews{
+    /* Color */
+    font-family: "Comic Sans MS";
+    color: #b414b5;
+    }
+
+    .img-News{
+    /* Display & Box Model */
     margin-left: 5%;
     height: 100px;
     border-radius: 5px;
     }
 
-    .TextNews{
-    color:black;
-    font-size: 17px;
-    font-family: "Bookman Old Style" ;
+    .Text-News{
+    /* Display & Box Model */
     text-indent: 40px;
+    font-size: 17px;
+    /* Color */
+    color:black;
+    font-family: "Bookman Old Style" ;
     }
 
-    .TextAuthor{
-    color:black;
+    .Text-Author{
+    /* Positioning */
+    float: left;
+    /* Display & Box Model */
     font-size: 17px;
     font-family: Dialog ;
     font-style: oblique;
-    float: left;
     margin-bottom: 0%;
     margin-left: 5%;
+    /* Color */
+    color:black;
     }
 
     .more{
+    /* Positioning */ 
     float: right;
+    /* Display & Box Model */  
     font-size: 17px;
     margin-right: 5%;
-    background: #7850b3;
-    border: #040403 2px dotted;
     cursor: pointer;
-    font-family: "Monotype Corsiva";
-    color: #fbff45;
     width: 120px;
     height: 37px;
     border-radius: 10px;
     outline: none;
+    /* Color */
+    border: #040403 2px dotted;
+    background: #7850b3;
+    font-family: "Monotype Corsiva";
+    color: #fbff45;
     }
     .more:hover{
     background: #debceb;
     }
 
-    .more1{
+    .change-del{
+    /* Positioning */ 
     float: left;
+    /* Display & Box Model */
     font-size: 17px;
     margin-left: 2%;
     margin-right: 5%;
-    background: #0cf1ce;
-    border: #040403 2px dotted;
     cursor: pointer;
-    font-family: "Rage Italic";
-    color: #ad2a2a;
     width: 120px;
     height: 40px;
     border-radius: 10px;
     outline: none;
+    /* Color */
+    border: #040403 2px dotted;
+    background: #0cf1ce;
+    font-family: "Rage Italic";
+    color: #ad2a2a;
     }
-    .more1:hover{
+    .change-del:hover{
     background: #debceb;
     }
 
-    .more2{
+    .more-tags{
+    /* Positioning */
     float: left;
+    /* Display & Box Model */
     font-size: 17px;
     margin-bottom: 2%;
     margin-left: 2%;
     margin-right: 5%;
-    background: #f6f0ff;
-    border: #040403 2px solid;
     cursor: pointer;
-    font-family: "Rage Italic";
-    color: #5245ff;
     width: 150px;
     height: 42px;
     border-radius: 10px;
     outline: none;
+    /* Color */
+    border: #040403 2px solid;
+    background: #f6f0ff;
+    font-family: "Rage Italic";
+    color: #5245ff;
     }
-    .more2:hover{
+    .more-tags:hover{
     background: #debceb;
     }
 
     .tag{
+    /* Positioning */
+    float: left;
+    /* Display & Box Model */
     margin-left: 2%;
     margin-right: 2%;
-    float: left;
+    /* Color */
     font-family: "Rage Italic";
     }
 
-    .tag1{
+    .tag-all{
+    /* Positioning */
+    float: left;
+    /* Display & Box Model */
     margin-left: 2%;
     margin-right: 2%;
-    float: left;
+    /* Color */
     font-family: "Rage Italic";
     }
-
 
     .back-button{
+    /* Display & Box Model */
     font-size: 17px;
     margin-top: 5%;
     margin-left: 33%;
-    border: #171616 4px solid;
     cursor: pointer;
-    font-family: Arial;
-    color: #fbfbfb;
     width: 250px;
     height: 30px;
     outline: none;
+    /* Color */
+    border: #171616 4px solid;
+    font-family: Arial;
+    color: #fbfbfb;
     background: green
     }
     .back-button:hover{
@@ -256,52 +312,62 @@ body, html {
     }
 
     .next-button{
+    /* Display & Box Model */
     font-size: 17px;
     margin-top: 5%;
     margin-left: 2%;
-    border: #171616 4px solid;
     cursor: pointer;
-    font-family: Arial;
-    color: white;
     width: 250px;
     height: 30px;
     outline: none;
+    /* Color */
+    font-family: Arial;
+    border: #171616 4px solid;
+    color: white;
     background: green;
     }
     .next-button:hover{
     background: #debceb;
     }
 
-
     .footer{
+    /* Display & Box Model */
     height: 10%;
-    background: red;
     margin-top: 2%;
     padding-left: 1%;
     align-content: center;
     justify-content: center;
+    /* Color */
+    background: red;
     }
 
     .footer p {
+    /* Display & Box Model */
     margin-top: 0;
     padding-top: 6px;
     }
 
     .info-in-footer{
-    color: #040404;
-    font-size: 20px;
-    font-family: Arial;
+    /* Positioning */
     float: left;
+    /* Display & Box Model */
+    font-size: 20px;
     margin-left: 3%;
+    /* Color */
+    color: #040404;
+    font-family: Arial;
     }
 
     .text{
+    /* Positioning */
+    float: left;
+    /* Display & Box Model */
     display: inline-block;
     margin-left: 5%;
     font-size: 20px;
-    font-family: "Lucida Console";
     text-shadow: 4px 2px red
-    float:left;
     margin-top: 1.5%;
     margin-right: 2%;
+    /* Color */
+    font-family: "Lucida Console";
     }
