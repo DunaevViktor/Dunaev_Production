@@ -1,0 +1,22 @@
+{
+  "name": "app.js",
+  "version": "1.0.0",
+  "description": "hello",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DunaevViktor/Dunaev_Production.git"
+  },
+  "author": "Dunaev_Viktor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DunaevViktor/Dunaev_Production/issues"
+  },
+  "homepage": "https://github.com/DunaevViktor/Dunaev_Production#readme",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}
