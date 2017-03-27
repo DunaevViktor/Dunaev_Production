@@ -3,30 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>TRUENEWS</title>
-    <link rel = "icon" type = "image/jpg" href = "images/logo.jpg"/>
-    <link href="styles.css" rel="stylesheet">
-    <script src = "taskFOUR.js" async></script>
+    <link rel="icon" type="image/jpg" href="images/logo.jpg"/>
+    <link href="styles.css" rel="stylesheet"/>
+    <script src="taskFOUR.js" async></script>
 </head>
 
 
 <body>
 
     <header>
-        <span class = "feed">TRUE NEWS</span>
-        <div class = "header-actions">
-            <span class = "add-article-holder"></span>
-            <span class = "user">Гость</span>
-            <a2 class = "login-logout" href = "#">Вход</a2>
+        <span class="feed">TRUE NEWS</span>
+        <div class="header-actions">
+            <span class="add-article-holder"></span>
+            <span class="user">Гость</span>
+            <a2 class="login-logout-button" href="#">Войти</a2>
         </div>
     </header>
- 
-	<div class="dynamic-block"></div>
 
-    	<template id="template-article-list">
-        	<div class="article-list"></div>
-    	</template>
+    <div class="dynamic-block"></div>
 
-	<template id="template-filters">
+    <template id="template-article-list">
+        <div class="article-list"></div>
+    </template>
+
+    <template id="template-filters">
         <div class="filters">
             <form name="filters">
                 <h1>Фильтры</h1>
@@ -61,10 +61,8 @@
             </form>
         </div>
     </template>
-
-
-
- <template id="template-article">
+    
+    <template id="template-article">
         <div class="article" data-id="id">
             <div class="article-header">
                 <h1 class="title">Заголовок</h1>
@@ -78,7 +76,6 @@
         </div>
     </template>
 
-   
     <template id="template-content">
         <p class="content">Текст новости</p>
     </template>
@@ -89,8 +86,7 @@
         </div>
     </template>
 
-
-	<template id="template-add-article">
+    <template id="template-add-article">
         <a class="add-article" href="#">Добавить новость</a>
     </template>
 
@@ -111,19 +107,18 @@
     </template>
 
     <template id="template-pagination-next-button">
-        <a class="pagination-next-button" href="#">Далее&raquo;</a>
+        <a1 class="pagination-next-button" href="#">Далее&raquo;</a1>
     </template>
 
     <template id="template-pagination-prev-button">
-        <a class="pagination-prev-button" href="#">&laquo;Назад</a>
+        <a1 class="pagination-prev-button" href="#">&laquo;Назад</a1>
     </template>
 
     <template id="template-return-button">
         <div class="return-button-block">
-            <a class="return-button" href="#">Вернуться к ленте</a>
+            <a class="return-button" href="#">На главную</a>
         </div>
     </template>
-
 
     <template id="template-authorization-input-block">
         <form class="authorization-input-block" name="authorization-input">
@@ -132,13 +127,11 @@
         </form>
     </template>
 
-
     <template id="template-login-button">
         <div class="login-button-block">
             <a class="login-button" href="#">Войти</a>
         </div>
     </template>
-
 
     <template id="template-edit-form">
         <div class="edit-form">
@@ -182,14 +175,11 @@
         </div>
     </template>
 
-
-
     <template id="template-existent-tag">
         <div class="tag-holder">
             <a class="tag" href="#">Тег</a>
         </div>
     </template>
-
 
     <template id="template-chosen-tag">
         <div class="tag-holder">
@@ -197,13 +187,10 @@
         </div>
     </template>
 
-
     <template id="template-option">
         <option class="option" value=""></option>
     </template>
-
-
-    <footer>Dunaev Viktor 5 группа 2 курс rulit.ivan@yandex.ru 21.03.2017</footer>
-
-    </body>
+    
+   <footer>Dunaev Viktor 5 группа 2 курс rulit.ivan@yandex.ru 21.03.2017</footer>
+</body>
 </html>

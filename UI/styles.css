@@ -248,7 +248,7 @@ header {
 }
 
 .reset-filter-holder {
-    margin-top: 30px;
+    margin-top: 18px;
 }
 
 .reset-filter {
@@ -262,7 +262,7 @@ header {
 .add-tag-filter {
     padding: 2px 5px;
     border-radius: 10px;
-    font: 23px/23px Georgia, sans-serif;
+    font: 15px/23px Georgia, sans-serif;
     text-align: center;
     background-color: #3a3733;
 }
@@ -354,7 +354,7 @@ header {
 .content {
     margin-bottom: 2%;
     padding: 0.3%;
-    background-color: #e0dbd2;
+    background-color: #c5e9ec;
     border-radius: 5px;
     box-shadow: 0 0 5px #000000;
 }
@@ -441,7 +441,6 @@ header {
 
 /* Footer */
 footer {
-    height: 20px;
     clear: both;
     width: 100%;
     text-align: center;
