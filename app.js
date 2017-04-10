@@ -305,6 +305,7 @@ app.use(express.static("public"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+    //запросы health checks (HTTP) - get для пользователей
     app.get("/user", function (req, res) {
             res.json(users.sort(function (a, b) {
                     if (a.login.toLowerCase() < b.login.toLowerCase()) {
@@ -316,14 +317,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
                     return 0;
                 }));
         });
-
+    //запросы health checks (HTTP) - get для новостей
     app.get("/article", function (req, res) {
             if (req.query.id) {
                     return res.json(articles.find(article => Number(req.query.id) === article.id));
                 }
             res.json(articles.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()));
         });
-
+    //запросы health checks (HTTP) - get для тегов
     app.get("/tags", function (req, res) {
             if (req.query.tag) {
                     return res.json(tags.find(tag => req.query.tag === tag));
@@ -338,7 +339,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
                     return 0;
                 }));
         });
-
+    //запросы health checks (HTTP) - post для новостей
     app.post("/article", function (req, res) {
             let article = {
                     id: req.body.id,
@@ -353,7 +354,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
             articles.push(article);
             res.json(articles.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()));
     });
-
+    //запросы health checks (HTTP) - post для тегов
     app.post("/tag", function (req, res) {
         tags.push(req.body.tag);
         tags.sort();
@@ -367,7 +368,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
                 return 0;
             }));
     });
-
+    //запросы health checks (HTTP) - put для новостей
     app.put("/article", function (req, res) {
             let articleIndex = articles.findIndex(article => req.body.id == article.id);
             articles[articleIndex].summary = req.body.summary;
@@ -376,7 +377,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
             articles[articleIndex].content = req.body.content;
             res.json(articles.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()));
         });
-
+    //запросы health checks (HTTP) - delete для новостей
     app.delete("/article", function (req, res) {
             let articleIndex = articles.findIndex(article => req.body.id == article.id);
             console.log(req.body.id);
