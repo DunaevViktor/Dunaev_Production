@@ -344,6 +344,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
                 }
             res.json(articles.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()));
         });
+    //запросы health checks (HTTP) - get
+    app.get('/length', (req, res) => {
+        res.json(articles.length);
+    });
     //запросы health checks (HTTP) - get для тегов
     app.get('/tags',(req, res) => {
             if (req.query.tag) {
@@ -400,7 +404,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
     //запросы health checks (HTTP) - delete для новостей
     app.delete('/article',(req, res) => {
             const articleIndex = articles.findIndex(article => req.body.id == article.id);
-            console.log(req.body.id);
             articles[articleIndex].isHidden = true;
             res.json(articles.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()));
         });
