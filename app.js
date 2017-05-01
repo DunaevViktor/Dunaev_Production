@@ -1,5 +1,7 @@
 ﻿const express = require('express');
 const bodyParser = require('body-parser');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 const app = express();
 
 const articles = [
@@ -320,49 +322,83 @@ const users = [
     }
 ];
 
+passport.use(new LocalStrategy({
+            usernameField: 'username',
+            passwordField: 'password',
+            session: false,
+        }, (username, password, done) => {
+            let user = users.find(userCur => userCur.login === username);
+            if (!user || user.password !== password) {
+                    done(null, false);
+                } else {
+                    done(null, user);
+                }
+    }));
+
+passport.serializeUser((user, done) => done(null, user.login));
+
+passport.deserializeUser((login, done) => {
+    let user = users.find(userCur => userCur.login === login);
+    if (user) {
+            done(null, user);
+        } else {
+            done(null, false);
+        }
+});
+
 app.set('port', (process.env.PORT || 3000));
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(passport.initialize());
 
     //запросы health checks (HTTP) - get для пользователей
-    app.get('/user',(req, res) => {
-            res.json(users.sort((a, b) => {
-                    if (a.login.toLowerCase() < b.login.toLowerCase()) {
-                            return -1;
-                        }
-                    if (a.login.toLowerCase() > b.login.toLowerCase()) {
-                            return 1;
-                        }
-                    return 0;
-                }));
-        });
-    //запросы health checks (HTTP) - get для новостей
-    app.get('/article',(req, res) => {
-            if (req.query.id) {
-                    return res.json(articles.find(article => Number(req.query.id) === article.id));
-                }
-            res.json(articles.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()));
-        });
+    app.get('/user', (req, res) => res.json(users.sort((a, b) => {
+            if (a.login.toLowerCase() < b.login.toLowerCase()) {
+                return -1;
+            }
+        if (a.login.toLowerCase() > b.login.toLowerCase()) {
+                return 1;
+            }
+        return 0;
+    })));
     //запросы health checks (HTTP) - get
-    app.get('/length', (req, res) => {
-        res.json(articles.length);
+    app.get('/authors', (req, res) => {
+        users.sort((a, b) => {
+            if (a.login.toLowerCase() < b.login.toLowerCase()) {
+            return -1;
+        }
+            if (a.login.toLowerCase() > b.login.toLowerCase()) {
+            return 1;
+        }
+        return 0;
+        });
+        res.json(users.map(user => user.login));
     });
+    //запросы health checks (HTTP) - get для новостей
+    app.get('/article', (req, res) => res.json(articles.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())));
+    //запросы health checks (HTTP) - get
+    app.get('/article/:id', (req, res) => res.json(articles.find(article => Number(req.query.id) === article.id)));
+    //запросы health checks (HTTP) - get
+    app.get('/length', (req, res) => res.json(articles.length));
     //запросы health checks (HTTP) - get для тегов
     app.get('/tags',(req, res) => {
             if (req.query.tag) {
-                    return res.json(tags.find(tag => req.query.tag === tag));
-                }
-            res.json(tags.sort((a, b) => {
+                res.json(tags.find(tag => req.query.tag === tag));
+            } else {
+                res.json(tags.sort((a, b) => {
                     if (a.toLowerCase() < b.toLowerCase()) {
-                            return -1;
-                        }
-                    if (a.toLowerCase() > b.toLowerCase()) {
-                            return 1;
-                        }
-                    return 0;
-                }));
-        });
+                        return -1;
+                    }
+                if (a.toLowerCase() > b.toLowerCase()) {
+                        return 1;
+                    }
+                return 0;
+            }));
+        }
+    });
+    //запросы health checks (HTTP) - get
+    app.get('/login', (req, res) => res.json(null));
     //запросы health checks (HTTP) - post для новостей
     app.post('/article',(req, res) => {
             const article = {
@@ -392,6 +428,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
                 return 0;
             }));
     });
+    //запросы health checks (HTTP) - post
+    app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => res.json(req.user.login));
     //запросы health checks (HTTP) - put для новостей
     app.put('/article',(req, res) => {
             const articleIndex = articles.findIndex(article => req.body.id == article.id);
@@ -408,6 +446,4 @@ app.use(bodyParser.urlencoded({ extended: true }));
             res.json(articles.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()));
         });
 
-    app.listen(app.get('port'),() => {
-            console.log("Server start on port: ", app.get('port'));
-        });
+    app.listen(app.get('port'), () => console.log("Server running in the 90's on port: ", app.get('port')));
