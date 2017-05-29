@@ -1,7 +1,6 @@
 ﻿const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
-const mongo = require('./db');
 const LocalStrategy = require('passport-local').Strategy;
 const app = express();
 
@@ -328,26 +327,24 @@ passport.use(new LocalStrategy({
             passwordField: 'password',
             session: false,
         }, (username, password, done) => {
-            let user;
-            mongo.getUsers()
-                .then(value => {
-                user = value.find(userCur => userCur.login === username);
-                done(null, (!user || user.password !== password) ? false : user);
-            })
-                .catch(error => console.log(error));
+            let user = users.find(userCur => userCur.login === username);
+            if (!user || user.password !== password) {
+                    done(null, false);
+                } else {
+                    done(null, user);
+                }
     }));
 
 passport.serializeUser((user, done) => done(null, user.login));
 
 passport.deserializeUser((login, done) => {
-            let user;
-            mongo.getUsers()
-                .then(value => {
-            user = value.find(userCur => userCur.login === login);
-            done(null, (user) ? user : false);
-        })
-                .catch(error => console.log(error));
-    });
+    let user = users.find(userCur => userCur.login === login);
+    if (user) {
+            done(null, user);
+        } else {
+            done(null, false);
+        }
+});
 
 app.set('port', (process.env.PORT || 3000));
 app.use(express.static('public'));
@@ -355,64 +352,51 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
 
-
-    mongo.connect('mongodb://localhost:27017', (err) => { ///siteEP
-       if (err) {
-            console.log(err);
-        } else {
-            app.listen(app.get('port'), () => console.log("Server running in the 90's on port: ", app.get('port')));
-        }
-    });
-
-    app.get('/user', (req, res) => mongo.getUsers()
-        .then(value => res.json(value.sort((a, b) => {
+    //запросы health checks (HTTP) - get для пользователей
+    app.get('/user', (req, res) => res.json(users.sort((a, b) => {
             if (a.login.toLowerCase() < b.login.toLowerCase()) {
-        return -1;
-        }
-            if (a.login.toLowerCase() > b.login.toLowerCase()) {
-        return 1;
-        }
-        return 0;
-        })))
-        .catch(error => console.log(error)));
-
-    app.get('/authors', (req, res) => mongo.getUsers()
-        .then(value => res.json(value.map(user => user.login).sort((a, b) => {
-            if (a.toLowerCase() < b.toLowerCase()) {
-            return -1;
-        }
-            if (a.toLowerCase() > b.toLowerCase()) {
-            return 1;
-        }
-        return 0;
-        })))
-        .catch(error => console.log(error)));
-
-    app.get('/article', (req, res) => mongo.getArticles()
-    .then(value => res.json(value.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())))
-    .catch(error => console.log(error)));
-
-    app.get('/article/:id', (req, res) => mongo.getArticleById(req.query.id)
-    .then(value => res.json(value))
-    .catch(error => console.log(error)));
-
-    app.get('/length', (req, res) => mongo.getArticles()
-    .then(value => res.json(value.length))
-    .catch(error => console.log(error)));
-
-    app.get('/tags', (req, res) => mongo.getTags()
-    .then(value => res.json((req.query.tag) ? value.map(tagObj => tagObj.tag).find(tag => req.query.tag === tag) :
-        value.map(tagObj => tagObj.tag).sort((a, b) => {
-        if (a.toLowerCase() < b.toLowerCase()) {
                 return -1;
             }
-        if (a.toLowerCase() > b.toLowerCase()) {
+        if (a.login.toLowerCase() > b.login.toLowerCase()) {
                 return 1;
             }
         return 0;
-    })))
-    .catch(error => console.log(error)));
-
+    })));
+    //запросы health checks (HTTP) - get
+    app.get('/authors', (req, res) => {
+        users.sort((a, b) => {
+            if (a.login.toLowerCase() < b.login.toLowerCase()) {
+            return -1;
+        }
+            if (a.login.toLowerCase() > b.login.toLowerCase()) {
+            return 1;
+        }
+        return 0;
+        });
+        res.json(users.map(user => user.login));
+    });
+    //запросы health checks (HTTP) - get для новостей
+    app.get('/article', (req, res) => res.json(articles.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())));
+    //запросы health checks (HTTP) - get
+    app.get('/article/:id', (req, res) => res.json(articles.find(article => Number(req.query.id) === article.id)));
+    //запросы health checks (HTTP) - get
+    app.get('/length', (req, res) => res.json(articles.length));
+    //запросы health checks (HTTP) - get для тегов
+    app.get('/tags',(req, res) => {
+            if (req.query.tag) {
+                res.json(tags.find(tag => req.query.tag === tag));
+            } else {
+                res.json(tags.sort((a, b) => {
+                    if (a.toLowerCase() < b.toLowerCase()) {
+                        return -1;
+                    }
+                if (a.toLowerCase() > b.toLowerCase()) {
+                        return 1;
+                    }
+                return 0;
+            }));
+        }
+    });
     //запросы health checks (HTTP) - get
     app.get('/login', (req, res) => res.json(null));
     //запросы health checks (HTTP) - post для новостей
@@ -427,16 +411,14 @@ app.use(passport.initialize());
                     content: req.body.content,
                     isHidden: false
             };
-        mongo.insertArticle(article)
-            .then(() => mongo.getArticles()
-            .then(value => res.json(value.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())))
-            .catch(error => console.log(error)))
-            .catch(error => console.log(error));
+            articles.push(article);
+            res.json(articles.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()));
     });
     //запросы health checks (HTTP) - post для тегов
-app.post('/tag', (req, res) => mongo.insertTag({tag: req.body.tag})
-        .then(() => mongo.getTags()
-        .then(value => res.json(value.map(tagObj => tagObj.tag).sort((a, b) => {
+    app.post('/tag',(req, res) => {
+        tags.push(req.body.tag);
+        tags.sort();
+        res.json(tags.sort((a, b) => {
                 if (a.toLowerCase() < b.toLowerCase()) {
                         return -1;
                     }
@@ -444,38 +426,25 @@ app.post('/tag', (req, res) => mongo.insertTag({tag: req.body.tag})
                         return 1;
                     }
                 return 0;
-})))
-        .catch(error => console.log(error)))
-        .catch(error => console.log(error))
-);
+            }));
+    });
     //запросы health checks (HTTP) - post
     app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => res.json(req.user.login));
     //запросы health checks (HTTP) - put для новостей
-app.put('/article', (req, res) => mongo.getArticleById(req.body.id)
-    .then(value => {
-        value.summary = req.body.summary;
-        value.title = req.body.title;
-        value.tags = req.body.tags;
-        value.content = req.body.content;
-        mongo.editArticle(value.id, value)
-            .then(() => mongo.getArticles()
-                .then(articles => res.json(articles.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())))
-                .catch(error => console.log(error)))
-            .catch(error => console.log(error))
-        })
-    .catch(error => console.log(error))
-);
+    app.put('/article',(req, res) => {
+            const articleIndex = articles.findIndex(article => req.body.id == article.id);
+            articles[articleIndex].summary = req.body.summary;
+            articles[articleIndex].title = req.body.title;
+            articles[articleIndex].tags = req.body.tags;
+            articles[articleIndex].content = req.body.content;
+            res.json(articles.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()));
+        });
+    //запросы health checks (HTTP) - delete для новостей
+    app.delete('/article',(req, res) => {
+            const articleIndex = articles.findIndex(article => req.body.id == article.id);
+            articles[articleIndex].isHidden = true;
+            res.json(articles.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()));
+        });
 
+    app.listen(app.get('port'), () => console.log("Server running in the 90's on port: ", app.get('port')));
 
-
-    app.delete('/article', (req, res) => mongo.getArticleById(req.body.id)
-    .then(value => {
-        value.isHidden = true;
-        mongo.editArticle(value.id, value)
-            .then(() => mongo.getArticles()
-                .then(articles => res.json(articles.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())))
-                .catch(error => console.log(error)))
-            .catch(error => console.log(error))
-    })
-    .catch(error => console.log(error))
-);
